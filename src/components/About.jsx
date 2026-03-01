@@ -55,7 +55,7 @@ export default function About() {
                             <div className="w-full h-full rounded-md border-2 border-teal-600 dark:border-teal-300 absolute -bottom-4 -right-4 -z-10 transition-transform duration-300 group-hover:-translate-x-2 group-hover:-translate-y-2"></div>
                             <div className="w-full h-full rounded-md overflow-hidden relative grayscale group-hover:grayscale-0 transition-all duration-300">
                                 <img
-                                    src="/images/avatar.png"
+                                    src="/sanjaymurmu/images/avatar.png"
                                     alt="Sanjay Murmu"
                                     className="w-full h-full object-cover object-center"
                                 />
