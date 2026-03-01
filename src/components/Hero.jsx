@@ -64,7 +64,7 @@ export default function Hero() {
                             Check out my work!
                         </Link>
                         <a
-                            href="/assets/resume.pdf"
+                            href="/sanjaymurmu/assets/resume.pdf"
                             download="Sanjay_Murmu_Resume.pdf"
                             className="inline-block text-center px-8 py-4 border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 font-mono rounded-md hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
                         >

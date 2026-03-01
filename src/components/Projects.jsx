@@ -8,7 +8,7 @@ const projects = [
         description: "A comprehensive portal for call center agents with advanced image processing capabilities to handle customer document verification in real-time.",
         tech: ["Node.js", "PostgreSQL", "AWS S3", "Image Processing"],
         links: { github: "#", external: "#" },
-        image: "/images/call_center.png"
+        image: "/sanjaymurmu/images/call_center.png"
     },
     {
         title: "Expo Dubai 2021",
@@ -16,7 +16,7 @@ const projects = [
         description: "Scalable web application supporting massive traffic spikes during the global Expo Dubai 2021 event. Engineered for high availability and performance under heavy load.",
         tech: ["Node.js", "Redis", "Elasticsearch", "Microservices"],
         links: { github: "#", external: "#" },
-        image: "/images/expo.png"
+        image: "/sanjaymurmu/images/expo.png"
     },
     {
         title: "High-Converting Funnel Architecture",
@@ -24,7 +24,7 @@ const projects = [
         description: "End-to-end implementation of marketing funnels integrating programmatic Facebook Ads APIs and Leonardo.io for dynamic ad generation, lifting conversion rates significantly.",
         tech: ["FB Ads API", "Next.js", "Leonardo.io", "PostgreSQL"],
         links: { github: "#", external: "#" },
-        image: "/images/funnel.png"
+        image: "/sanjaymurmu/images/funnel.png"
     }
 ];
 
