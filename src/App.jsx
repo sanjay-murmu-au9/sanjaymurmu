@@ -1,4 +1,5 @@
 import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import About from './components/About';
@@ -9,10 +10,11 @@ import Metrics from './components/Metrics';
 import Testimonials from './components/Testimonials';
 import Blog from './components/Blog';
 import Contact from './components/Contact';
+import ServicesLanding from './components/ServicesLanding';
 import { useTheme } from './hooks/useTheme';
 import './App.css';
 
-function App() {
+function Portfolio() {
   const { theme, toggleTheme } = useTheme();
 
   return (
@@ -48,6 +50,17 @@ function App() {
         <p>Designed & Built by Sanjay Murmu &copy; {new Date().getFullYear()}</p>
       </footer>
     </div>
+  );
+}
+
+function App() {
+  return (
+    <Router basename="/sanjaymurmu">
+      <Routes>
+        <Route path="/" element={<Portfolio />} />
+        <Route path="/services" element={<ServicesLanding />} />
+      </Routes>
+    </Router>
   );
 }
 
