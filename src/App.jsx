@@ -11,6 +11,8 @@ import Testimonials from './components/Testimonials';
 import Blog from './components/Blog';
 import Contact from './components/Contact';
 import ServicesLanding from './components/ServicesLanding';
+import PrivacyPolicy from './components/PrivacyPolicy';
+import TermsOfService from './components/TermsOfService';
 import { useTheme } from './hooks/useTheme';
 import './App.css';
 
@@ -59,6 +61,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Portfolio />} />
         <Route path="/services" element={<ServicesLanding />} />
+        <Route path="/privacy" element={<PrivacyPolicy />} />
+        <Route path="/terms" element={<TermsOfService />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </Router>

@@ -308,11 +308,28 @@ export default function ServicesLanding() {
             </section>
 
             {/* Footer CTA */}
-            <section className="py-6 px-1 bg-slate-900 dark:bg-black text-center">
-                {/* <p className="text-slate-400 mb-2">Prefer email?</p> */}
-                <a href="mailto:sanjay@example.com" className="text-teal-400 hover:text-teal-300 font-semibold text-lg">
-                    Designed & Built by Sanjay Murmu © 2026
-                </a>
+            <section className="py-12 px-6 bg-slate-900 dark:bg-black">
+                <div className="max-w-6xl mx-auto">
+                    <div className="flex flex-col md:flex-row justify-between items-center">
+                        <div className="mb-4 md:mb-0">
+                            <p className="text-slate-400 mb-2">Prefer email?</p>
+                            <a href="mailto:sanjaymurmu40work@gmail.com" className="text-teal-400 hover:text-teal-300 font-semibold text-lg">
+                                sanjaymurmu40work@gmail.com
+                            </a>
+                        </div>
+                        <div className="flex flex-wrap gap-6 text-sm">
+                            <a href="/sanjaymurmu/privacy" className="text-slate-400 hover:text-teal-300 transition-colors">
+                                Privacy Policy
+                            </a>
+                            <a href="/sanjaymurmu/terms" className="text-slate-400 hover:text-teal-300 transition-colors">
+                                Terms of Service
+                            </a>
+                            <span className="text-slate-500">
+                                © {new Date().getFullYear()} Sanjay Murmu
+                            </span>
+                        </div>
+                    </div>
+                </div>
             </section>
         </div>
     );
