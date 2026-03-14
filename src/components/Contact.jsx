@@ -127,7 +127,7 @@ export default function Contact() {
                         <button
                             type="submit"
                             disabled={isSubmitting}
-                            className="inline-block px-8 py-4 bg-teal-600/10 dark:bg-teal-300/10 border border-teal-600 dark:border-teal-300 text-teal-600 dark:text-teal-300 font-mono rounded-md hover:bg-teal-600/20 dark:hover:bg-teal-300/20 disabled:opacity-50 disabled:cursor-not-allowed transition-colors cursor-pointer w-full md:w-auto flex items-center justify-center gap-2"
+                            className="w-full px-8 py-4 bg-teal-600/10 dark:bg-teal-300/10 border border-teal-600 dark:border-teal-300 text-teal-600 dark:text-teal-300 font-mono rounded-md hover:bg-teal-600/20 dark:hover:bg-teal-300/20 disabled:opacity-50 disabled:cursor-not-allowed transition-colors cursor-pointer flex items-center justify-center gap-2"
                         >
                             {isSubmitting ? (
                                 <>
