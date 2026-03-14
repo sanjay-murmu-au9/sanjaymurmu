@@ -1,14 +1,67 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useForm } from 'react-hook-form';
+import { supabase } from '../lib/supabase';
 
 export default function ServicesLanding() {
     const [submitted, setSubmitted] = useState(false);
-    const { register, handleSubmit, formState: { errors } } = useForm();
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [submitError, setSubmitError] = useState(null);
+    const { register, handleSubmit, formState: { errors }, reset } = useForm();
 
-    const onSubmit = (data) => {
-        console.log(data);
-        setSubmitted(true);
+    const onSubmit = async (data) => {
+        setIsSubmitting(true);
+        setSubmitError(null);
+        
+        try {
+            // Try Edge Function first, fallback to direct insert
+            let result, error;
+            
+            try {
+                const response = await supabase.functions.invoke('contact-form', {
+                    body: {
+                        name: data.name,
+                        email: data.email,
+                        project_type: data.projectType,
+                        budget: data.budget || null,
+                        message: data.message,
+                        source: 'services-landing'
+                    }
+                });
+                result = response.data;
+                error = response.error;
+            } catch (functionError) {
+                console.log('Edge function failed, trying direct insert:', functionError);
+                
+                // Fallback to direct database insert
+                const response = await supabase
+                    .from('contact_submissions')
+                    .insert([
+                        {
+                            name: data.name,
+                            email: data.email,
+                            project_type: data.projectType,
+                            budget: data.budget || null,
+                            message: data.message,
+                            source: 'services-landing'
+                        }
+                    ]);
+                result = response.data;
+                error = response.error;
+            }
+
+            if (error) {
+                throw error;
+            }
+
+            setSubmitted(true);
+            reset();
+        } catch (error) {
+            console.error('Error submitting form:', error);
+            setSubmitError('Failed to send message. Please try again or email directly.');
+        } finally {
+            setIsSubmitting(false);
+        }
     };
 
     return (
@@ -342,14 +395,35 @@ export default function ServicesLanding() {
 
                                 {/* Submit Button */}
                                 <div className="pt-6">
+                                    {submitError && (
+                                        <div className="mb-4 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
+                                            <p className="text-red-700 dark:text-red-300 text-sm flex items-center">
+                                                <span className="mr-2">⚠️</span>
+                                                {submitError}
+                                            </p>
+                                        </div>
+                                    )}
                                     <button
                                         type="submit"
-                                        className="group w-full px-8 py-5 bg-gradient-to-r from-teal-600 to-teal-700 hover:from-teal-700 hover:to-teal-800 text-white font-bold rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 text-lg flex items-center justify-center space-x-3 transform hover:-translate-y-1"
+                                        disabled={isSubmitting}
+                                        className="group w-full px-8 py-5 bg-gradient-to-r from-teal-600 to-teal-700 hover:from-teal-700 hover:to-teal-800 disabled:from-slate-400 disabled:to-slate-500 text-white font-bold rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 text-lg flex items-center justify-center space-x-3 transform hover:-translate-y-1 disabled:transform-none disabled:cursor-not-allowed"
                                     >
-                                        <span>🔥 Claim Your Spot (Only 2 Left)</span>
-                                        <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                                        </svg>
+                                        {isSubmitting ? (
+                                            <>
+                                                <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                                </svg>
+                                                <span>Sending Message...</span>
+                                            </>
+                                        ) : (
+                                            <>
+                                                <span>🔥 Claim Your Spot (Only 2 Left)</span>
+                                                <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                                                </svg>
+                                            </>
+                                        )}
                                     </button>
                                     <p className="text-center text-sm text-slate-500 dark:text-slate-400 mt-4">
                                         🔒 Your information is secure and will never be shared
