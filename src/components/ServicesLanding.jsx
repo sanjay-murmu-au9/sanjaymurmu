@@ -228,80 +228,134 @@ export default function ServicesLanding() {
                         </p>
 
                         {submitted ? (
-                            <div className="text-center p-12 bg-teal-50 dark:bg-teal-900/20 rounded-xl">
-                                <div className="text-6xl mb-4">✓</div>
-                                <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">Thanks for reaching out!</h3>
-                                <p className="text-slate-600 dark:text-slate-400">I'll get back to you within 24 hours.</p>
-                            </div>
+                            <motion.div 
+                                initial={{ opacity: 0, scale: 0.9 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                transition={{ duration: 0.5 }}
+                                className="text-center p-12 bg-gradient-to-br from-teal-50 to-green-50 dark:from-teal-900/20 dark:to-green-900/20 rounded-2xl border border-teal-200 dark:border-teal-700"
+                            >
+                                <div className="text-6xl mb-6">✅</div>
+                                <h3 className="text-3xl font-bold text-slate-900 dark:text-white mb-4">Message Sent Successfully!</h3>
+                                <p className="text-lg text-slate-600 dark:text-slate-400 mb-6">
+                                    Thanks for reaching out! I'll get back to you within 24 hours with a detailed proposal.
+                                </p>
+                                <div className="inline-flex items-center px-4 py-2 bg-teal-100 dark:bg-teal-900/30 rounded-full">
+                                    <span className="text-teal-700 dark:text-teal-300 font-semibold text-sm">📧 Check your email for confirmation</span>
+                                </div>
+                            </motion.div>
                         ) : (
-                            <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-                                <div>
-                                    <label className="block text-slate-700 dark:text-slate-300 font-semibold mb-2">Name *</label>
-                                    <input
-                                        {...register("name", { required: true })}
-                                        className="w-full px-4 py-3 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-teal-500 outline-none"
-                                        placeholder="Your name"
-                                    />
-                                    {errors.name && <span className="text-red-500 text-sm">Name is required</span>}
+                            <motion.form 
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.5 }}
+                                onSubmit={handleSubmit(onSubmit)} 
+                                className="space-y-8 bg-slate-50 dark:bg-slate-800 p-8 rounded-xl shadow-xl border border-slate-200 dark:border-slate-700"
+                            >
+                                {/* Form Header */}
+                                <div className="text-center pb-6 border-b border-slate-200 dark:border-slate-700">
+                                    <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">Let's Start Your Project</h3>
+                                    <p className="text-slate-600 dark:text-slate-400">Fill out the form below and I'll send you a custom proposal</p>
                                 </div>
 
-                                <div>
-                                    <label className="block text-slate-700 dark:text-slate-300 font-semibold mb-2">Email *</label>
-                                    <input
-                                        {...register("email", { required: true, pattern: /^\S+@\S+$/i })}
-                                        className="w-full px-4 py-3 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-teal-500 outline-none"
-                                        placeholder="your@email.com"
-                                    />
-                                    {errors.email && <span className="text-red-500 text-sm">Valid email is required</span>}
+                                {/* Name & Email Row */}
+                                <div className="grid md:grid-cols-2 gap-6">
+                                    <div className="space-y-2">
+                                        <label className="block text-slate-700 dark:text-slate-300 font-semibold text-sm uppercase tracking-wide">
+                                            Full Name *
+                                        </label>
+                                        <input
+                                            {...register("name", { required: "Name is required" })}
+                                            className="w-full px-4 py-4 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-900 dark:text-white placeholder-slate-500 dark:placeholder-slate-400 focus:border-teal-500 focus:ring-2 focus:ring-teal-500/20 transition-all duration-200 outline-none"
+                                            placeholder="John Doe"
+                                        />
+                                        {errors.name && <span className="text-red-500 text-sm flex items-center"><span className="mr-1">⚠️</span>{errors.name.message}</span>}
+                                    </div>
+
+                                    <div className="space-y-2">
+                                        <label className="block text-slate-700 dark:text-slate-300 font-semibold text-sm uppercase tracking-wide">
+                                            Email Address *
+                                        </label>
+                                        <input
+                                            {...register("email", { 
+                                                required: "Email is required",
+                                                pattern: {
+                                                    value: /^\S+@\S+$/i,
+                                                    message: "Please enter a valid email"
+                                                }
+                                            })}
+                                            className="w-full px-4 py-4 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-900 dark:text-white placeholder-slate-500 dark:placeholder-slate-400 focus:border-teal-500 focus:ring-2 focus:ring-teal-500/20 transition-all duration-200 outline-none"
+                                            placeholder="john@company.com"
+                                        />
+                                        {errors.email && <span className="text-red-500 text-sm flex items-center"><span className="mr-1">⚠️</span>{errors.email.message}</span>}
+                                    </div>
                                 </div>
 
-                                <div>
-                                    <label className="block text-slate-700 dark:text-slate-300 font-semibold mb-2">Project Type *</label>
-                                    <select
-                                        {...register("projectType", { required: true })}
-                                        className="w-full px-4 py-3 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-teal-500 outline-none"
-                                    >
-                                        <option value="">Select a service</option>
-                                        <option value="backend">Backend Development</option>
-                                        <option value="cloud">Cloud Infrastructure</option>
-                                        <option value="growth">Growth Engineering</option>
-                                        <option value="fullstack">Full-Stack Project</option>
-                                    </select>
-                                    {errors.projectType && <span className="text-red-500 text-sm">Please select a project type</span>}
+                                {/* Project Type & Budget Row */}
+                                <div className="grid md:grid-cols-2 gap-6">
+                                    <div className="space-y-2">
+                                        <label className="block text-slate-700 dark:text-slate-300 font-semibold text-sm uppercase tracking-wide">
+                                            Project Type *
+                                        </label>
+                                        <select
+                                            {...register("projectType", { required: "Please select a project type" })}
+                                            className="w-full px-4 py-4 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-900 dark:text-white focus:border-teal-500 focus:ring-2 focus:ring-teal-500/20 transition-all duration-200 outline-none appearance-none cursor-pointer"
+                                        >
+                                            <option value="">Choose your service...</option>
+                                            <option value="backend">🚀 Backend Development</option>
+                                            <option value="cloud">☁️ Cloud Infrastructure</option>
+                                            <option value="growth">📈 Growth Engineering</option>
+                                            <option value="fullstack">💻 Full-Stack Project</option>
+                                        </select>
+                                        {errors.projectType && <span className="text-red-500 text-sm flex items-center"><span className="mr-1">⚠️</span>{errors.projectType.message}</span>}
+                                    </div>
+
+                                    <div className="space-y-2">
+                                        <label className="block text-slate-700 dark:text-slate-300 font-semibold text-sm uppercase tracking-wide">
+                                            Budget Range
+                                        </label>
+                                        <select
+                                            {...register("budget")}
+                                            className="w-full px-4 py-4 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-900 dark:text-white focus:border-teal-500 focus:ring-2 focus:ring-teal-500/20 transition-all duration-200 outline-none appearance-none cursor-pointer"
+                                        >
+                                            <option value="">Select budget range...</option>
+                                            <option value="<5k">💰 Less than $5,000</option>
+                                            <option value="5k-10k">💰💰 $5,000 - $10,000</option>
+                                            <option value="10k-25k">💰💰💰 $10,000 - $25,000</option>
+                                            <option value="25k+">💰💰💰💰 $25,000+</option>
+                                        </select>
+                                    </div>
                                 </div>
 
-                                <div>
-                                    <label className="block text-slate-700 dark:text-slate-300 font-semibold mb-2">Budget Range</label>
-                                    <select
-                                        {...register("budget")}
-                                        className="w-full px-4 py-3 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-teal-500 outline-none"
-                                    >
-                                        <option value="">Select budget range</option>
-                                        <option value="<5k">Less than $5,000</option>
-                                        <option value="5k-10k">$5,000 - $10,000</option>
-                                        <option value="10k-25k">$10,000 - $25,000</option>
-                                        <option value="25k+">$25,000+</option>
-                                    </select>
-                                </div>
-
-                                <div>
-                                    <label className="block text-slate-700 dark:text-slate-300 font-semibold mb-2">Project Details *</label>
+                                {/* Project Details */}
+                                <div className="space-y-2">
+                                    <label className="block text-slate-700 dark:text-slate-300 font-semibold text-sm uppercase tracking-wide">
+                                        Project Details *
+                                    </label>
                                     <textarea
-                                        {...register("message", { required: true })}
-                                        rows="5"
-                                        className="w-full px-4 py-3 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-teal-500 outline-none"
-                                        placeholder="Tell me about your project, timeline, and goals..."
+                                        {...register("message", { required: "Please describe your project" })}
+                                        rows="6"
+                                        className="w-full px-4 py-4 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-900 dark:text-white placeholder-slate-500 dark:placeholder-slate-400 focus:border-teal-500 focus:ring-2 focus:ring-teal-500/20 transition-all duration-200 outline-none resize-none"
+                                        placeholder="Tell me about your project...\n\n• What are you trying to build?\n• What's your timeline?\n• Any specific requirements?\n• Current challenges you're facing?"
                                     />
-                                    {errors.message && <span className="text-red-500 text-sm">Project details are required</span>}
+                                    {errors.message && <span className="text-red-500 text-sm flex items-center"><span className="mr-1">⚠️</span>{errors.message.message}</span>}
                                 </div>
 
-                                <button
-                                    type="submit"
-                                    className="w-full px-8 py-4 bg-teal-600 hover:bg-teal-700 text-white font-bold rounded-lg shadow-lg hover:shadow-xl transition-all text-lg"
-                                >
-                                    🔥 Claim Your Spot (Only 2 Left) →
-                                </button>
-                            </form>
+                                {/* Submit Button */}
+                                <div className="pt-6">
+                                    <button
+                                        type="submit"
+                                        className="group w-full px-8 py-5 bg-gradient-to-r from-teal-600 to-teal-700 hover:from-teal-700 hover:to-teal-800 text-white font-bold rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 text-lg flex items-center justify-center space-x-3 transform hover:-translate-y-1"
+                                    >
+                                        <span>🔥 Claim Your Spot (Only 2 Left)</span>
+                                        <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                                        </svg>
+                                    </button>
+                                    <p className="text-center text-sm text-slate-500 dark:text-slate-400 mt-4">
+                                        🔒 Your information is secure and will never be shared
+                                    </p>
+                                </div>
+                            </motion.form>
                         )}
                     </motion.div>
                 </div>
